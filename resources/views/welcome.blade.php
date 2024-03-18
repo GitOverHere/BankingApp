@@ -44,7 +44,7 @@
     <div class="content">
         <h2>Get Started Today:</h2>
         <p>Ready to take control of your financial future? Join [Bank Name] today and experience the difference of banking with a trusted partner. Visit one of our branches or contact us to speak with a representative.</p>
-        <a href="#" class="cta-button">Open an Account</a>
+        <a href="signin" class="cta-button">Open an Account</a>
     </div>
 </section>
 
