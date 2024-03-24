@@ -16,8 +16,8 @@ An web app that literally allows you to become a bank!
 * Admin interface to add money to accounts electronically.
 * Admin interface to subtract money from accounts electronically
 * Admin interface to add and subtract money using name, account number,routing number, and amount.
-* Let user create credit and savings account online.
-* Let admin create credit and savings accounts for users.
+* Let the user create checking and savings account online.
+* Let admin create checking and savings accounts for users.
 * Route money to other accounts using full name, account number,amount, and routing number.
 * Webpage for Initial Setup
 * Entity relationship diagrams for all of the tables
@@ -34,6 +34,10 @@ An web app that literally allows you to become a bank!
 * Drag and drop all files into your apache directory (www) or a folder. 
 * Then open a web browser and navigate to your web server.
 
+
+Alternatively you can extract to any folder and run 
+
+php artisan serve
 -
 
 
