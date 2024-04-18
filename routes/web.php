@@ -23,3 +23,7 @@ Route::get('/signin', function () {
 })->name('signin');
 
 
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->name('dashboard');
+

@@ -3,8 +3,13 @@ import React, { useState, useEffect } from "react";
 
 export default function Account(){
 	const [mounted,setMounted] = useState(false)
+	const loading = True
 
-
+	if(!mounted){
+		
+		
+		
+	}
 
 
 
