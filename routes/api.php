@@ -73,6 +73,9 @@ Route::post('api/user/delete', 'User@delete');
 Route::post('api/account/create', 'Account@create');
 
 
+Route::post('api/account/getinfo', 'Account@getinfo');
+
+
 // Create account route with account information as arguments
 Route::post('api/account/update', 'Account@update');
 
