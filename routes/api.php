@@ -15,8 +15,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user()->name();
-})->name();
+    return $request->user();
+});
 
 // Login route with email and password arguments
 Route::post('api/signin/login', 'Signin@login')->name('signin.login');
