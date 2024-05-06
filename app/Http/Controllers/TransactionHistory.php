@@ -6,5 +6,13 @@ use Illuminate\Http\Request;
 
 class TransactionHistory extends Controller
 {
-    //
+    
+    public function export(){
+
+
+        
+    }
+
+
+
 }

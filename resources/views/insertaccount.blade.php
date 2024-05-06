@@ -7,10 +7,10 @@
 </head>
 <body>
     <h1>Insert Account</h1>
-    <form method="POST" action="{{ route('account.insert') }}">
+    <form method="POST" action="{{ route('accounts.insert') }}">
         @csrf
         <label for="account_number">Account Number:</label><br>
-        <input type="text" id="account_number" name="number"><br><br>
+        <input type="text" id="number" name="number"><br><br>
         
         <label for="apr">APR:</label><br>
         <input type="text" id="apr" name="apr"><br><br>
