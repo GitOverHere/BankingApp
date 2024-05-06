@@ -1,0 +1,32 @@
+\documentclass{article}
+\usepackage{prettytable}
+
+\begin{document}
+
+\title{Bank Statement}
+\author{Your Name}
+\date{\today}
+\maketitle
+
+\section*{Account Information}
+\textbf{Account Holder:} {{name}} \\
+\textbf{Account Number:} {{accountnumber}} \\
+\textbf{Annual Percentage Rate (APR):} {{apr}}\%
+
+\section*{Transactions}
+\begin{table}[h!]
+\begin{prettytable}{|c|c|c|}
+\hline
+\textbf{Date} & \textbf{Description} & \textbf{Amount (USD)} \\
+\hline
+{% for transaction in transactions %}
+{{ transaction.date }} & {{ transaction.type }} & {{ transaction.amount }} \\
+{% endfor %}
+\hline
+\end{prettytable}
+\end{table}
+
+\section*{Closing Balance}
+\textbf{Balance as of {{ statement_date }}:} \${{ closing_balance }}
+
+\end{document}

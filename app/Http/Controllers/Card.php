@@ -2,11 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB; // Import the DB facade
 
-class CardController extends Controller
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
+use Laravel\Sanctum\HasApiTokens;
+
+class Card extends Controller
 {
+
+
+    public function insert(Request $request){
+        create($request);
+
+    }
+
+
     public function create(Request $request)
     {
         // Validate incoming request
@@ -48,6 +61,9 @@ class CardController extends Controller
         return response()->json(['message' => 'Card created successfully'], 201);
     }
 
+
+    
+
     public function update(Request $request, $id)
     {
         // Validate incoming request
@@ -83,6 +99,41 @@ class CardController extends Controller
         // Return a response
         return response()->json(['message' => 'Card updated successfully'], 200);
     }
+
+    public function freezecard(Request $request) {
+        $user = auth()->user();
+        $sessions = DB::table('personal_access_tokens')->where('tokenable_id', $user->id)->get();
+        
+        if (sizeof($sessions) == 1) {
+             // Extract the email from the session
+             $email = $sessions[0]->email;
+    
+             // Check if the account number is specified in the request
+             $number = $request->input('number');
+
+             $accountnumber = 
+
+             $numbers = 
+
+
+
+        }
+
+
+
+
+
+    }
+
+
+    public function report_lost(Request $request){
+
+
+
+    }
+
+
+
 
     public function destroy($id)
     {
