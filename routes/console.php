@@ -19,7 +19,7 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote');
 
 
-
+/*
 Artisan::command('addapr', function(){
 	//adds aop
 	$this->Admin::addapr();
@@ -43,3 +43,4 @@ Artisan::command('createstatement', function()){
 	//the end of the month. Intrest is a a transaction that credits your account.
 	
 })->purpose("Create monthly statements for all accounts on a monthly basis.")
+*/
