@@ -57,7 +57,9 @@ class UserController extends Controller
 
 	   // Validate incoming request
         $request->validate([
-            'name' => 'required',
+            'first-name' => 'required',
+            'middle-name' => 'required',
+            'last-name' => 'required',
             'email' => 'required|email|unique:users,email',
             'phone' => 'required',
             'streetaddress' => 'required',
@@ -68,8 +70,16 @@ class UserController extends Controller
             'password' => 'required|min:8',
         ]);
 
+
+          $token = $request->user()->createToken($request->token);
+
+
+
+
         // Placeholder registration logic
-        $name = $request->input('name');
+        $first_name = $request->input('first-name');
+        $middle_name = $request->input('middle-name');
+        $last_name = $request->input('last-name');
         $email = $request->input('email');
         $phone = $request->input('phone');
         $streetaddress = $request->input('streetaddress');
@@ -82,7 +92,7 @@ class UserController extends Controller
 
 
 		 // Hash the password
-    $hashedPassword = bcrypt($password);
+    $hashedPassword = password_hash($password, PASSWORD_ARGON2I);
 
     // Create a new user record in the 'users' table
     DB::table('users')->insert([
@@ -99,20 +109,10 @@ class UserController extends Controller
         'updated_at' => now(),
     ]);
 
-    // Generate a unique token for password reset
-    $token = Str::random(60);
 
-    // Insert a record into the 'password_resets' table
-    DB::table('password_resets')->insert([
-        'email' => $email,
-        'token' => $token,
-        'created_at' => now(),
-    ]);
-
-    // Return success response
     return response()->json([
         'code' => 200,
-        'message' => 'User registered successfully!',
+        'message' => 'Succesfully created your account.',
     ], 200);
 
 
@@ -122,7 +122,45 @@ class UserController extends Controller
 
     }
 
-    public function reset(Request $request)
+
+
+    public function startreset(Request $request){
+
+
+// Generate a unique token for password reset
+    $users = DB::select('select * from users where email = $request->email');
+
+    $email  = "asdasd";
+
+
+
+
+    $token = Str::random(60);
+
+    // Insert a record into the 'password_resets' table
+    DB::table('password_resets')->insert([
+        'email' => $request->email,
+        'token' => $token,
+        'created_at' => now(),
+    ]);
+
+    // Return success response
+    return response()->json([
+        'code' => 200,
+        'message' => 'If that email is valid, you will recieve a password reset email.',
+    ], 200);
+
+
+
+
+
+
+    }
+
+
+
+
+    public function finalizereset(Request $request)
     {
         // Validate incoming request
         $request->validate([
