@@ -1,4 +1,4 @@
-var login = document.querySelector(".login");
+var signin = document.querySelector(".login");
 var register = document.querySelector(".sign-up");
 var reset = document.querySelector(".reset");
 
@@ -26,4 +26,27 @@ reset.addEventListener("click",function () {
 
 
 });
+
+
+function login() {
+
+
+
+}
+
+function register() {
+
+
+
+}
+
+
+function reset() {
+
+
+
+
+
+}
+
 

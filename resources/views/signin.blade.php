@@ -52,8 +52,8 @@
 </div>
 
 
-<div class="login">
-<form>
+<div class="signin">
+<form name="login">
 <h1>Sign In</h1>
 
 <label for="username">Email</label>

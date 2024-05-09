@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\PersonalAccessToken;
+use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Redirect;
+
 
 class UserController extends Controller
 {
@@ -15,6 +19,7 @@ class UserController extends Controller
 
     public function login(Request $request)
     {
+
         // Validate incoming request
         $request->validate([
             'email' => 'required|email',
@@ -32,10 +37,32 @@ class UserController extends Controller
             // Verify password
             if (password_verify($password, $user->password)) {
                 // Password matches, return success response
-                return response()->json([
-                    'code' => 200,
-                    'message' => 'Login successful'
-                ], 200);
+
+                    $token = new PersonalAccessToken();
+                    $token->tokenable_type = 'App\\Models\\User'; // Example value for tokenable_type
+                    $token->tokenable_id = 1; // Example value for tokenable_id
+                    $token->name = 'Example Token';
+                    $token->token = 'random_token_string';
+                    $token->abilities = ['create', 'read', 'update', 'delete']; // Example value for abilities
+
+                    $token->save();
+
+
+                    // Create a JSON response
+$response = response()->json([
+    'code' => 200,
+    'message' => 'Login successful'
+], 200);
+
+// Set the cookie in the response
+$response->headers->setCookie(Cookie::make('token', $token->token, 60)); // Set your cookie details here
+
+// Create a redirect response
+$redirectResponse = Redirect::to('../dashboard');
+
+// Return the response with the cookie set and the redirect
+return $response->withHeaders($redirectResponse->headers->all());
+
             } else {
                 // Password does not match, return error response
                 return response()->json([
@@ -96,7 +123,9 @@ class UserController extends Controller
 
     // Create a new user record in the 'users' table
     DB::table('users')->insert([
-        'name' => $name,
+        'first_name' -> $first_name,
+        'middle_name' -> $middle_name,
+        'last_name' -> $last_name,
         'email' => $email,
         'phone' => $phone,
         'streetaddress' => $streetaddress,
