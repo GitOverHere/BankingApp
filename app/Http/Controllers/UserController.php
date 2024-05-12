@@ -37,31 +37,12 @@ class UserController extends Controller
             // Verify password
             if (password_verify($password, $user->password)) {
                 // Password matches, return success response
-
-                    $token = new PersonalAccessToken();
-                    $token->tokenable_type = 'App\\Models\\User'; // Example value for tokenable_type
-                    $token->tokenable_id = 1; // Example value for tokenable_id
-                    $token->name = 'Example Token';
-                    $token->token = 'random_token_string';
-                    $token->abilities = ['create', 'read', 'update', 'delete']; // Example value for abilities
-
-                    $token->save();
+                $tokens = DB::table("");
 
 
-                    // Create a JSON response
-$response = response()->json([
-    'code' => 200,
-    'message' => 'Login successful'
-], 200);
 
-// Set the cookie in the response
-$response->headers->setCookie(Cookie::make('token', $token->token, 60)); // Set your cookie details here
 
-// Create a redirect response
-$redirectResponse = Redirect::to('../dashboard');
 
-// Return the response with the cookie set and the redirect
-return $response->withHeaders($redirectResponse->headers->all());
 
             } else {
                 // Password does not match, return error response
@@ -139,11 +120,29 @@ return $response->withHeaders($redirectResponse->headers->all());
     ]);
 
 
-    return response()->json([
-        'code' => 200,
-        'message' => 'Succesfully created your account.',
-    ], 200);
+    $token = new PersonalAccessToken();
+                    $token->tokenable_type = 'App\\Models\\User'; // Example value for tokenable_type
+                    $token->tokenable_id = 1; // Example value for tokenable_id
+                    $token->name = 'Example Token';
+                    $token->token = 'random_token_string';
+                    $token->abilities = ['create', 'read', 'update', 'delete']; // Example value for abilities
 
+                    $token->save();
+
+
+                    // Create a JSON response
+                    $response = response()->json([
+                    'code' => 200,
+                    'message' => 'Sucessfully created your account!'], 200);
+
+                    // Set the cookie in the response
+                    $response->headers->setCookie(Cookie::make('token', $token->token, 60)); // Set your cookie details here
+
+                    // Create a redirect response
+                    $redirectResponse = Redirect::to('../dashboard');
+
+// Return the response with the cookie set and the redirect
+return $response->withHeaders($redirectResponse->headers->all());
 
 
 

@@ -7,12 +7,12 @@
 </head>
 <body>
     <h1>Delete  Card</h1>
-    <form method="POST" action="{{ route('Card.delete') }}">
+    <form method="POST" action="{{ route('card.delete') }}">
         @csrf
         <label for="Card_number"> Card Number:</label><br>
         <input type="text" id="Card_number" name="number"><br><br>
-    
-        
+
+
         <button type="submit">Delete  Card</button>
     </form>
 </body>

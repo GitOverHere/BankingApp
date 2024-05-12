@@ -1,3 +1,21 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!DOCTYPE html>
 
 <html lang="en">
@@ -5,11 +23,20 @@
 <title>Sign In</title>
 <link rel="stylesheet" type="text/css" href ="{{ asset('css/login.css')}}">
 
+<!--
 <meta name="title">Login to {Bank}</meta>
 <meta name="description">Login to {Bank} here </meta>
 <meta name = "tags">bank,checking,savings</meta>
+
+-->
 <script src="{{ asset('js/login.js') }}">
 
+
+<script>
+
+
+
+</script>
 
 </head>
 
@@ -31,29 +58,23 @@
 
 
 
-<div class="backdrop" style="background-image: url('../img/sunset-ocean.jpg');">
-
-</div>
-
-
-
 
 
 
 
 <div class="loginarea">
+
 <div class="link-div">
 
 <a class="forgot-password">Forgot Password?</a>
-<a class="signin-button">Sign In </a>
+<a class="signin-button selected">Sign In </a>
 <a class="signup-button">Sign Up</a>
 
 
 </div>
+<p class="error"></p>
 
-
-<div class="signin">
-<form name="login">
+<div name="signin" method="post" class="signin show">
 <h1>Sign In</h1>
 
 <label for="username">Email</label>
@@ -65,14 +86,11 @@
 
 
 <button>Login</button>
-</form>
-
-
 </div>
 
-<div class="sign-up hide">
 
-<form>
+
+<div name="signup" method="post" class="signup hide">
 <h1> Sign Up</h1>
 
 <label for="name">Full Name</label>
@@ -86,10 +104,6 @@
 <button id="btn" type="button">Validate</button>
 <span id="valid-msg" class="hide">✓ Valid</span>
 <span id="error-msg" class="hide"></span>
-
-
-
-
 <div class="field address">
 <label for="street-address">Street Address</h4>
 <input name="street-address" type="text" required>
@@ -107,34 +121,30 @@
 <label for="country">Country</label>
 <input name="country" type="text"  maxlength="16" required>
 
-    <button>Register</button>
-
-</form>
-</div>
 
 </div>
 
+ <button>Register</button>
 
-<div class="reset hide">
+</div>
 
 
-
-<form>
+<div class="reset hide" method="post" name="reset">
 <h1> Reset</h1>
 <label for= "email">Email Address</label>
 <input name="email" type="email" required>
 
 <button>Reset</button>
 
-</form>
-
-
-
 </div>
 
 
 
 </div>
+
+
+
+
 
 
 

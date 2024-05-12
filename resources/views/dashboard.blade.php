@@ -1,48 +1,27 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
+if (isset($_COOKIE['token'])) {
+    $token = $_COOKIE['token'];
 
+    $user = DB::table('personal_access_tokens')->where('token', $token)->first();
 
+    if ($user) {
+        Auth::loginUsingId($user->id);
 
-function validatetoken(){
-
-if(isset($_COOKIE['token'])){
-
-$token = $_COOKIE['token'];
-
-
-    $tokens = DB::table("Select * from personal_access_tokens WHERE token=$token");
-    if(count($tokens) == 1)){
-        //token valid
-
-
-
-
-
-
-
-
+        if (Auth::user()->is_admin) {
+            $view = 'admindashboard';
+        } else {
+            $view = 'accounts';
+        }
+    } else {
+        $view = 'gotologin';
     }
-    else {
-
-
-    }
-
-
+} else {
+    $view = 'gotologin';
 }
 
-
-
-
-
-
-}
-
-
-
-
-
-
-
-
+return view($view);
 ?>

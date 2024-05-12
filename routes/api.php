@@ -2,7 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Signin;
+
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AccountController; // Assuming your Account controller is named AccountController
 use App\Http\Controllers\UserController; // Assuming your User controller is named UserController
 use App\Http\Controllers\CardController; // Assuming your Card controller is named CardController
@@ -61,17 +62,20 @@ Route::post('/tokens/create', function (Request $request) {
 
 
 // Authentication routes
-Route::post('signin/login', [Signin::class, 'login'])->name('signin.login');
-Route::post('signin/signup', [Signin::class, 'signup'])->name('signin.signup');
-Route::post('signin/reset', [Signin::class, 'reset'])->name('signin.reset');
+Route::post('signin/login', [UserController::class, 'login'])->name('user.login');
+Route::post('signin/signup', [UserController::class, 'signup'])->name('user.signup');
+Route::post('signin/beginreset', [UserController::class, 'beginreset'])->name('user.beginreset');
+Route::post('signin/beginreset', [UserController::class, 'finalizereset'])->name('user.finalizereset');
 
 // Admin routes
-Route::post('admin/createuser', 'Admin@createUser')->name('createuser');
-Route::post('admin/updateuser', 'Admin@updateUser')->name('admin.updateuser');
-Route::post('admin/deleteuser', 'Admin@deleteUser')->name('admin.deleteuser');
-Route::post('admin/createaccount', 'Admin@createAccount')->name('admin.createaccount');
-Route::post('admin/updateaccount', 'Admin@updateAccount')->name('admin.updateaccount');
-Route::post('admin/deleteaccount', 'Admin@deleteAccount')->name('admin.deleteaccount');
+Route::post('admin/insertuser', [AdminController::class,'InsertUser'])->name('admin.insertuser');
+Route::post('admin/createuser', [AdminController::class,'CreateUser'])->name('admin.createuser');
+Route::post('admin/updateuser', [AdminController::class,'UpdateUser'])->name('admin.updateuser');
+Route::post('admin/deleteuser', [AdminController::class,'DeleteUser'])->name('admin.deleteuser');
+Route::post('admin/searchuser', [AdminController::class,'SearchUser'])->name('admin.searchuser');
+Route::post('admin/createaccount', [AdminController::class,'CreateAccount'])->name('admin.createaccount');
+Route::post('admin/updateaccount', [AdminController::class,'UpdateAccount'])->name('admin.updateaccount');
+Route::post('admin/deleteaccount', [AdminController::class,'DeleteAccount'])->name('admin.deleteaccount');
 
 // Account routes
 Route::post('account/insert', [AccountController::class, 'insert'])->name('account.insert');

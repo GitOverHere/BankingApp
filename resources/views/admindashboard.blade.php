@@ -88,6 +88,15 @@
 
     <h2>Admin Actions</h2>
     <ul>
+
+
+
+
+
+        <li><a href="{{ route('admin.user.insert') }}">Insert User</li>
+        <li><a href="{{ route('admin.user.update') }}">Update User</li>
+        <li><a href="{{ route('admin.user.delete') }}">Delete User</li>
+        <li><a href="{{ route('admin.user.search') }}">Search User</a></li>
         <li><a href="{{ route('admin.account.insert') }}">Insert Account</a></li>
         <li><a href="{{ route('admin.account.update') }}">Update Account</a></li>
         <li><a href="{{ route('admin.account.delete') }}">Delete Account</a></li>

@@ -10,26 +10,9 @@ body {
 }
 
 
-.backdrop {
-
-    width: 50%;
-    height: 100%;
-
-    background-repeat: no-repeat;
-        background-attachment: fixed;
-        background-size: 100% 100%;
 
 
 
-}
-
-
-/* Container styles */
-.container {
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 20px;
-}
 
 /* Form styles */
 form {
@@ -95,12 +78,16 @@ button:hover {
     cursor: pointer;
 }
 
-.link-div selected {
+.link-div .selected {
 
     background-color: #017AFF;
     color: white;
     transition: 0.3s ease;
     cursor: pointer;
+}
+.hide {
+
+    display: none;
 }
 
 .show {
@@ -108,9 +95,6 @@ button:hover {
     transition: opacity 300ms;
 }
 
-.hide {
-
-}
 
 
 .link-div {
@@ -121,11 +105,14 @@ button:hover {
 
 .loginarea {
     margin: 0 auto;
+    width: 50%;
     justify-content: center;
+        margin: 0 auto;
+        padding: 2px;
 
 }
 
-.loginarea > div {
-    margin: 2vh;
+.loginarea > form {
+    margin: 5vh;
 
 }

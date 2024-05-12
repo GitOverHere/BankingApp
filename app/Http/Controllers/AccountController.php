@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use Laravel\Sanctum\HasApiTokens;
+use App\Http\Controllers\DateTime;
+
 
 class AccountController extends Controller
 {
@@ -95,16 +97,38 @@ class AccountController extends Controller
     {
 
 
-      $user = auth()->user();
 
 
+
+            //$user = DB::table('users')->where('email','itsbinny@gmail.com')->first();
+
+            //$name= $user->first_name+$user->middle_name+$user->last_name;
+
+            $number = random_int(0000,9999);
+            $userid = 1;
+            $balance = "0";
+            $created_at = "2024-8-5 19:21:00";
+            $updated_at = $created_at;
+
+
+            DB::insert("insert into accounts (accountnumber,userid,balance,created_at,updated_at) values(?,?,?,?,?)",
+            [$number,"1","232.34",$created_at,$updated_at]
+
+            );
+
+
+
+      /*
 $sessions = DB::table('personal_access_tokens')
             ->where('tokenable_id', $user->id)
             ->get(['token']);
 
 
+*/
 
 
+
+/*
 
         if(sizeof($sessions)==1){
 
@@ -135,8 +159,10 @@ $sessions = DB::table('personal_access_tokens')
             ],200);
 
         }
+*/
 
 
+/*
         else {
             // Return error message if no session or multiple sessions found
             return response()->json([
@@ -145,7 +171,7 @@ $sessions = DB::table('personal_access_tokens')
             ], 400);
         }
 
-
+*/
 
     }
 

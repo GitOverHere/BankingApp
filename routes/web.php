@@ -36,6 +36,34 @@ Route::get('/admindashboard', function(){
     return view('admindashboard');
 })->name('admin.dashboard');
 
+
+
+Route::get('/admindashboard/insert/user', function(){
+    return view('insertuser');
+})->name('admin.user.insert');
+
+
+Route::get('/admindashboard/update/user', function(){
+    return view('updateuser');
+})->name('admin.user.update');
+
+
+
+
+Route::get('/admindashboard/delete/user', function(){
+    return view('deleteuser');
+})->name('admin.user.delete');
+
+
+
+Route::get('/admindashboard/search/user', function(){
+    return view('searchuser');
+})->name('admin.user.search');
+
+
+
+
+
 Route::get('/admindashboard/insert/account', function(){
     return view('insertaccount');
 })->name('admin.account.insert');
