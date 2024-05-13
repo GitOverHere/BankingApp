@@ -9,27 +9,9 @@
 <form method="POST" action="{{route('admin.deleteuser')}}">
 <h1> Delete User</h1>
 
-<input type="text" name="first_name">
 
-<input type="text" name="middle_name">
-
-<input type="text" name="last_name">
-
-<input type="text" name="email">
-
-<input type="text" name="phone">
-
-<input type="text" name="street_address">
-
-<input type="text" name="city">
-
-
-<input type="text" name="region">
-
-<input type="text" name="postalcode">
-
-
-<input type="type" name="password">
+<label for="id">ID:</label>
+<input type="text" name="id">
 
 
 <button>Submit</button>

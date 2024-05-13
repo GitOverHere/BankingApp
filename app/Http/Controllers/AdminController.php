@@ -75,7 +75,7 @@ $token = Str::random(40); // Generates a random 40-character token
 // Create a JSON response
 $response = response()->json([
     'code' => 200,
-    'message' => 'Successfully created your account!'
+    'message' => 'Successfully created the user!'
 ], 200);
 
 // Set the cookie in the response
@@ -91,65 +91,40 @@ return $response->withHeaders($redirectResponse->headers->all());
 
     }
 
- public function UpdateUser(Request $request){
 
 
-        $id = $request->input('id');
-       $first_name = $request->input('first_name');
-        $middle_name = $request->input('middle_name');
-        $last_name = $request->input('last_name');
-        $email = $request->input('email');
-        $phone = $request->input('phone');
-        $streetaddress = $request->input('streetaddress');
-        $city = $request->input('city');
-        $region = $request->input('region');
-        $postalcode = $request->input('postalcode');
-        $country = $request->input('country');
-        $password = $request->input('password');
+    public function UpdateUser(Request $request){
+    $id = $request->input('id');
+    $userData = $request->only(['first_name', 'middle_name', 'last_name', 'email', 'phone', 'streetaddress', 'city', 'region', 'postalcode', 'country', 'password']);
 
+    // Update user information in the database
+    DB::table('users')
+        ->where('id', $id)
+        ->update($userData);
 
-   DB::update("
-    UPDATE users
-    SET
-    first_name = CASE WHEN first_name IS NOT NULL THEN '$first_name' ELSE first_name END,
-    middle_name = CASE WHEN middle_name IS NOT NULL THEN '$middle_name' ELSE middle_name END,
-    last_name = CASE WHEN last_name IS NOT NULL THEN '$last_name' ELSE last_name END,
-    email = CASE WHEN email IS NOT NULL THEN '$email' ELSE email END,
-    phone = CASE WHEN phone IS NOT NULL THEN '$phone' ELSE phone END,
-    street_address = CASE WHEN street_address IS NOT NULL THEN '$street_address' ELSE street_address END,
-    city = CASE WHEN city IS NOT NULL THEN '$city' ELSE city END,
-    region = CASE WHEN region IS NOT NULL THEN '$region' ELSE region END,
-    postalcode = CASE WHEN postalcode IS NOT NULL THEN '$postalcode' ELSE postalcode END,
-    country = CASE WHEN country IS NOT NULL THEN '$country' ELSE country END,
-    password = CASE WHEN password IS NOT NULL THEN '$password' ELSE password END
-    WHERE id=$id");
+    // Generate a random token
+    $token = Str::random(40);
 
+    // Create a JSON response
+    $response = response()->json([
+        'code' => 200,
+        'message' => 'Successfully updated the account!'
+    ], 200);
 
+    // Set the cookie in the response
+    $response->withCookie(cookie('token', $token, 60));
 
-// Create a JSON response
-                    $response = response()->json([
-                    'code' => 200,
-                    'message' => 'Sucessfully created your account!'], 200);
-
-                    // Set the cookie in the response
-                    $response->headers->setCookie(Cookie::make('token', $token->token, 60)); // Set your cookie details here
-
-                    // Create a redirect response
-                    $redirectResponse = Redirect::to('../dashboard');
-
-// Return the response with the cookie set and the redirect
-return $response->withHeaders($redirectResponse->headers->all());
-
-
-
-
-
-
-
-    }
+    // Redirect to the dashboard
+    return $response->header('Location', '../dashboard');
+}
 
 
     public function DeleteUser(Request $request){
+
+
+
+        // Generate a random token
+$token = Str::random(40); // Generates a random 40-character token
 
         $id = $request->input('users');
 
@@ -159,13 +134,13 @@ return $response->withHeaders($redirectResponse->headers->all());
         /// Create a JSON response
                     $response = response()->json([
                     'code' => 200,
-                    'message' => 'Sucessfully created your account!'], 200);
+                    'message' => 'Sucessfully deleted the user!'], 200);
 
                     // Set the cookie in the response
-                    $response->headers->setCookie(Cookie::make('token', $token->token, 60)); // Set your cookie details here
+                    $response->headers->setCookie(Cookie::make('token', $token, 60)); // Set your cookie details here
 
                     // Create a redirect response
-                    $redirectResponse = Redirect::to('../dashboard');
+                    $redirectResponse = Redirect::to('../admindashboard');
 
 // Return the response with the cookie set and the redirect
 return $response->withHeaders($redirectResponse->headers->all());
@@ -178,15 +153,71 @@ return $response->withHeaders($redirectResponse->headers->all());
 
 
 
-    public function SearchUser(Request $request){
+ public function SearchUser(Request $request){
+    $id = $request->input('id');
+    $firstName = $request->input('first_name');
+    $middleName = $request->input('middle_name');
+    $lastName = $request->input('last_name');
+    $email = $request->input('email');
+    $phone = $request->input('phone');
 
+    // Initialize the query builder
+    $query = DB::table('users');
 
-
+    // Add conditions based on the provided criteria
+    if (!empty($id)) {
+        $query->where('id', $id);
     }
+
+    if (!empty($firstName)) {
+        $query->where('first_name', 'LIKE', '%'.$firstName.'%');
+    }
+
+    if (!empty($middleName)) {
+        $query->where('middle_name', 'LIKE', '%'.$middleName.'%');
+    }
+
+    if (!empty($lastName)) {
+        $query->where('last_name', 'LIKE', '%'.$lastName.'%');
+    }
+
+    if (!empty($email)) {
+        $query->where('email', 'LIKE', '%'.$email.'%');
+    }
+
+    if (!empty($phone)) {
+        $query->where('phone', 'LIKE', '%'.$phone.'%');
+    }
+
+    // Execute the query to get the search results
+    $users = $query->get();
+
+    // Create a JSON response with the search results
+    $response = response()->json([
+        'code' => 200,
+        'message' => 'Search results based on the provided criteria',
+        'data' => $users
+    ], 200);
+
+    // Generate a random token
+    $token = Str::random(40); // Generates a random 40-character token
+
+    // Set the cookie in the response
+    $response->withCookie(cookie('token', $token, 60)); // Set your cookie details here
+
+    // Create a redirect response
+    $redirectResponse = redirect('../../admindashboad');
+
+    // Return the response with the search results, cookie set, and the redirect
+    return $response->withHeaders($redirectResponse->headers->all());
+}
 
 
     public function FreezeUser(){
         //When this function executed, user will recive message and no longer be able to login.
+
+
+
 
 
     }
@@ -194,19 +225,110 @@ return $response->withHeaders($redirectResponse->headers->all());
     public function InsertAccount(){
 
 
+
+
+            $number = $request->input('number');
+            $userid = $request->input('userid');
+            $balance = $request->input('balance');
+            $type = $request->input('type');
+
+            $created_at = date('Y-m-d H:i:s');
+            $updated_at = $created_at;
+
+
+            DB::insert("insert into accounts (accountnumber,userid,balance,type,created_at,updated_at) values(?,?,?,?,?,?)",
+            [$number,$userid,$balance,$created_at,$updated_at]
+
+            );
+
+            // Generate a random token
+    $token = Str::random(40); // Generates a random 40-character token
+
+
+    $response = response()->json([
+        'code' => 200,
+        'message' => 'Sucessfully inserted the account!',
+
+    ], 200);
+
+
+    // Set the cookie in the response
+    $response->withCookie(cookie('token', $token, 60)); // Set your cookie details here
+
+    // Create a redirect response
+    $redirectResponse = redirect('../../admindashboard');
+
+    // Return the response with the search results, cookie set, and the redirect
+    return $response->withHeaders($redirectResponse->headers->all());
+
+
     }
 
-    public function UpdateAccount(){
 
 
+    public function UpdateAccount(Request $request){
+    $number = $request->input('number');
+    $userid = $request->input('userid');
+    $balance = $request->input('balance');
+    $type = $request->input('type');
 
-    }
+    $updated_at = date('Y-m-d H:i:s');
 
-    public function DeleteAccount(){
+    // Perform an update query to update the account details
+    DB::table('accounts')
+        ->where('accountnumber', $number)
+        ->update([
+            'userid' => $userid,
+            'balance' => $balance,
+            'type' => $type,
+            'updated_at' => $updated_at
+        ]);
+
+    // Generate a random token
+    $token = Str::random(40); // Generates a random 40-character token
+
+    // Create a JSON response
+    $response = response()->json([
+        'code' => 200,
+        'message' => 'Successfully updated the account!'
+    ], 200);
+
+    // Set the cookie in the response
+    $response->withCookie(cookie('token', $token, 60)); // Set your cookie details here
+
+    // Create a redirect response
+    $redirectResponse = redirect('../../admindashboard');
+
+    // Return the response with the cookie set and the redirect
+    return $response->withHeaders($redirectResponse->headers->all());
+}
 
 
+ public function DeleteAccount(Request $request){
+    $number = $request->input('number');
 
-    }
+    // Perform a delete query to remove the account based on the account number
+    DB::table('accounts')->where('accountnumber', $number)->delete();
+
+    // Generate a random token
+    $token = Str::random(40); // Generates a random 40-character token
+
+    // Create a JSON response
+    $response = response()->json([
+        'code' => 200,
+        'message' => 'Successfully deleted the account!'
+    ], 200);
+
+    // Set the cookie in the response
+    $response->withCookie(cookie('token', $token, 60)); // Set your cookie details here
+
+    // Create a redirect response
+    $redirectResponse = redirect('../../admindashboard');
+
+    // Return the response with the cookie set and the redirect
+    return $response->withHeaders($redirectResponse->headers->all());
+}
+
 
 
     public function FreezeAccount(){
